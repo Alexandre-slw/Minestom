@@ -65,10 +65,17 @@ dependencies {
     // Kotlin Libraries
     api(libs.bundles.kotlin)
 
+    // Extension Management System dependency handler.
+    api(libs.dependencyGetter)
+
     // Minestom Data (From MinestomDataGenerator)
     implementation(libs.minestomData)
 
     // NBT parsing/manipulation/saving
     api("io.github.jglrxavpok.hephaistos:common:${libs.versions.hephaistos.get()}")
     api("io.github.jglrxavpok.hephaistos:gson:${libs.versions.hephaistos.get()}")
+}
+
+tasks.getByName<Jar>("jar") {
+    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
 }
